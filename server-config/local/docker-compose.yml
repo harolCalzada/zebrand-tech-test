@@ -1,0 +1,32 @@
+version: "3"
+services:
+  db:
+    container_name: zebrand-db-local
+    image: "postgres:13" 
+    restart: unless-stopped
+    env_file:
+      - ../../.env
+    ports:
+      - "5435:5432"
+    volumes:
+      - ../../zebrand-db:/var/lib/postgresql/data
+    
+  back:
+    container_name: zebrand-back-local
+    build:
+      context: ../../
+      dockerfile: ./server-config/local/Dockerfile
+    restart: unless-stopped
+    env_file:
+      - ../../.env
+    entrypoint: ./entrypoint.sh
+    volumes:
+      - ../../src:/www/src
+    depends_on:
+      - db
+    ports:
+      - "8000:8000"
+  
+volumes:
+  db:
+    driver: local
