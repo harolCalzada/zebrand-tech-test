@@ -1,5 +1,5 @@
 #!/bin/sh
-# Section 1- Bash options
+# Section 1: Bash options
 set -o errexit
 set -o nounset
 
@@ -27,7 +27,7 @@ until postgres_ready; do
 done
 >&2 echo "PostgreSQL is available"
 
-# Section 3- Django commands
+# Section 3: Django commands
 python ./src/manage.py migrate  --settings=config.settings.local
 python ./src/manage.py runserver 0.0.0.0:8000 --settings=config.settings.local
 exec "$@"
