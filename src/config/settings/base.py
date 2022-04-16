@@ -64,7 +64,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME': get_secret('POSTGRES_DB'),
         'USER': get_secret('POSTGRES_USER'),
         'PASSWORD': get_secret('POSTGRES_PASSWORD'),

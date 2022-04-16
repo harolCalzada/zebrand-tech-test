@@ -1,4 +1,9 @@
+# you need create a .env file with this values inside server-config/*local*
 POSTGRES_PASSWORD=zebrand
 POSTGRES_USER=zebrand
 POSTGRES_DB=zebrand
 POSTGRES_HOST=db
+POSTGRES_PORT=5432
+COMPOSE_PROJECT_NAME=zebrand-tech-test
+PYTHONUNBUFFERED=1
+PYTHONDONTWRITEBYTECODE=1
