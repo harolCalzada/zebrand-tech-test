@@ -4,7 +4,7 @@ from .serializers import ProductSerializer
 
 
 class ProductListAPIView(ListAPIView):
-    queryset = Product.objects.all()
+    queryset = Product.objects.all().select_related('brand')
     serializer_class = ProductSerializer
 
 
