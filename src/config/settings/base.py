@@ -14,7 +14,7 @@ SECRET_KEY = get_secret('SECRET_KEY', 'secret-unsafe')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '0.0.0.0']
+ALLOWED_HOSTS = ['localhost', '0.0.0.0', '127.0.0.1']
 
 
 # Application definition
@@ -33,6 +33,7 @@ THIRD_PARTY_APPS = [
 ]
 
 LOCAL_APPS = [
+    'apps.core',
     'apps.products',
     'apps.users'
 ]
@@ -139,3 +140,6 @@ REST_FRAMEWORK = {
     "PAGE_SIZE": 20,
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
 }
+
+
+AUTH_USER_MODEL = 'users.User'
