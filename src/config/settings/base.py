@@ -30,6 +30,7 @@ DJANGO_APPS = [
 
 THIRD_PARTY_APPS = [
     'rest_framework',
+    'drf_yasg'
 ]
 
 LOCAL_APPS = [
@@ -143,3 +144,5 @@ REST_FRAMEWORK = {
 
 
 AUTH_USER_MODEL = 'users.User'
+
+ENABLED_SWAGGER_DOC = False

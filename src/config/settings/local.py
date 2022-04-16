@@ -8,11 +8,11 @@ DEBUG = True
 THIRD_PARTY_LOCAL_APPS = [
     'debug_toolbar'
 ]
+ENABLED_SWAGGER_DOC = True
 
 INSTALLED_APPS += THIRD_PARTY_LOCAL_APPS
 
-
-# DEBUG TOOLBAR CONFIG
+# DEBUG TOOLBAR CONFIG
 MIDDLEWARE.append('debug_toolbar.middleware.DebugToolbarMiddleware')
 
 # DEBUG TOOLBAR HACK FOR DOCKER
