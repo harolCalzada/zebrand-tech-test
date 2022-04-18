@@ -146,3 +146,6 @@ REST_FRAMEWORK = {
 AUTH_USER_MODEL = 'users.User'
 
 ENABLED_SWAGGER_DOC = False
+
+EMAIL_HOST = get_secret('EMAIL_HOST', 'smtp-server')
+EMAIL_PORT = get_secret('EMAIL_PORT', '1025')
