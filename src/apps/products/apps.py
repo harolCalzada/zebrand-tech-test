@@ -6,6 +6,8 @@ class ProductsConfig(AppConfig):
     name = 'apps.products'
 
     def ready(self) -> None:
-        from .signals import (
-            product_create_update_notification, product_delete_notification
+        from .receivers import (
+            product_create_update_notification,
+            product_delete_notification,
+            increment_product_view_counter
         )
