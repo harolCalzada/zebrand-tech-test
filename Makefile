@@ -8,3 +8,5 @@ docker-local-migrate:
 	docker  exec -it python /www/src/manage.py migrate --settings=config.settings.local --no-input 
 docker-local-makemigrations:
 	docker  exec -it python /www/src/manage.py makemigrations --settings=config.settings.local --no-input
+docker-local-run-tests:
+	docker exec zebrand-back-local pytest /www/src/tests
