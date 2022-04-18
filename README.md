@@ -11,9 +11,19 @@ We also need to keep track of the number of times every single product is querie
 Your task is to build this system implementing a REST or GraphQL API using the stack of your preference. 
 
 
-# Requirements
+## Requirements
 - docker y docker-compose
 - make (optional)
+
+## Assumptions:
+- We can use django admin for create new users and manage permissions.
+
+## Solution
+- The project use django and django rest framework.
+- The project use the default User model from django,
+is a admin user if "is_staff" or "is_superuser" field is True
+- For notifications the project use a broker and worker to send an email in background(dramatiq library).
+- The project uses a in memory database to save the product queried data(redis).
 
 ## Build the project for local environment
 Create a .env file inside server-config/local folder with the values inside env_template file
@@ -24,12 +34,19 @@ $ make docker-local-build
 $ make docker-local-run
 ```
 
-
-## Tools for develop in local environment
+## Tools for developing in local environment
 
 The project uses the following tools:
+- docker, the project uses a back , postgres, smt, redis, worker containers
 - django debug toolbar library
-- mailhog docker containter for simulate smtp server
 - pytest for testing, you can execute ```$ make docker-local-run-tests``` for run all test cases
 - swagger: you can visit http://localhost:8000/swagger for check the documentation
 
+
+
+## TO DO
+- tests for email notification and product counter
+- create the config for a production environment(new docker configuration)
+- add rate limit to product detail api (to avoid bots that can generate false counter visit value)
+- improve mail message to track product values changed
+- Generate data to load on initial setup(django fixtures)
