@@ -31,4 +31,5 @@ The project uses the following tools:
 - django debug toolbar library
 - mailhog docker containter for simulate smtp server
 - pytest for testing, you can execute ```$ make docker-local-run-tests``` for run all test cases
+- swagger: you can visit http://localhost:8000/swagger for check the documentation
 
