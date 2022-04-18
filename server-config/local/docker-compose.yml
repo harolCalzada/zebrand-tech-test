@@ -26,7 +26,15 @@ services:
       - db
     ports:
       - "8000:8000"
-  
+
+  smtp-server:
+    container_name: zebrand-back-smtp
+    image: mailhog/mailhog:v1.0.1
+    ports:
+      - "8025:8025"
+      - '1025:1025'
+    restart: unless-stopped
+
 volumes:
   db:
     driver: local

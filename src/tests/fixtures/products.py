@@ -10,6 +10,7 @@ def create_brand(name: str) -> Brand:
 def luuna_brand(db) -> Brand:
     return create_brand('Luuna')
 
+
 @pytest.fixture
 def nooz_brand(db) -> Brand:
     return create_brand('Nooz')
