@@ -5,11 +5,11 @@ services:
     image: "postgres:13" 
     restart: unless-stopped
     env_file:
-      - ../../.env
+      - ./.env
     ports:
       - "5435:5432"
     volumes:
-      - ../../zebrand-db:/var/lib/postgresql/data
+      - ../../volumes/zebrand-db:/var/lib/postgresql/data
     
   back:
     container_name: zebrand-back-local
@@ -18,7 +18,7 @@ services:
       dockerfile: ./server-config/local/Dockerfile
     restart: unless-stopped
     env_file:
-      - ../../.env
+      - ./.env
     entrypoint: ./entrypoint.sh
     volumes:
       - ../../src:/www/src
@@ -26,7 +26,39 @@ services:
       - db
     ports:
       - "8000:8000"
-  
+
+  smtp-server:
+    container_name: zebrand-back-smtp
+    image: mailhog/mailhog:v1.0.1
+    ports:
+      - "8025:8025"
+      - '1025:1025'
+    restart: unless-stopped
+
+  redis:
+    image: redis:alpine
+    container_name: zebrand-broker
+    ports:
+      - "6379:6379"
+    volumes:
+      - ../../volumes/zebrand-redis:/data
+
+  worker:
+    container_name: zebrand-tasks-worker
+    restart: always
+    build:
+      context: ../../
+      dockerfile: ./server-config/local/Dockerfile
+    command: bash -c "cd ./src && python manage.py rundramatiq"
+    env_file:
+      - ./.env
+    volumes:
+      - ../../src:/www/src
+    depends_on:
+      - redis
+      - db
+      - back
+
 volumes:
   db:
     driver: local
