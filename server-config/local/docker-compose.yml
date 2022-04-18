@@ -9,7 +9,7 @@ services:
     ports:
       - "5435:5432"
     volumes:
-      - ../../zebrand-db:/var/lib/postgresql/data
+      - ../../volumes/zebrand-db:/var/lib/postgresql/data
     
   back:
     container_name: zebrand-back-local
@@ -34,6 +34,30 @@ services:
       - "8025:8025"
       - '1025:1025'
     restart: unless-stopped
+
+  redis:
+    image: redis:alpine
+    container_name: zebrand-broker
+    ports:
+      - "6379:6379"
+    volumes:
+      - ../../volumes/zebrand-redis:/data
+
+  worker:
+    container_name: zebrand-tasks-worker
+    restart: always
+    build:
+      context: ../../
+      dockerfile: ./server-config/local/Dockerfile
+    command: bash -c "cd ./src && python manage.py rundramatiq"
+    env_file:
+      - ./.env
+    volumes:
+      - ../../src:/www/src
+    depends_on:
+      - redis
+      - db
+      - back
 
 volumes:
   db:

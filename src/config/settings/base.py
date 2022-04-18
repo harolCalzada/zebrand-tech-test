@@ -30,7 +30,8 @@ DJANGO_APPS = [
 
 THIRD_PARTY_APPS = [
     'rest_framework',
-    'drf_yasg'
+    'drf_yasg',
+    'django_dramatiq'
 ]
 
 LOCAL_APPS = [
@@ -149,3 +150,25 @@ ENABLED_SWAGGER_DOC = False
 
 EMAIL_HOST = get_secret('EMAIL_HOST', 'smtp-server')
 EMAIL_PORT = get_secret('EMAIL_PORT', '1025')
+
+REDIS_URL = get_secret('REDIS_URL', 'redis://redis:6379/0')
+
+DRAMATIQ_BROKER = {
+    "BROKER": "dramatiq.brokers.redis.RedisBroker",
+    "OPTIONS": {
+        "url": REDIS_URL,
+    },
+    "MIDDLEWARE": [
+        "dramatiq.middleware.Prometheus",
+        "dramatiq.middleware.AgeLimit",
+        "dramatiq.middleware.TimeLimit",
+        "dramatiq.middleware.Callbacks",
+        "dramatiq.middleware.Retries",
+        "django_dramatiq.middleware.DbConnectionsMiddleware",
+        "django_dramatiq.middleware.AdminMiddleware",
+    ]
+}
+
+# Defines which database should be used to persist Task objects when the
+# AdminMiddleware is enabled.  The default value is "default".
+DRAMATIQ_TASKS_DATABASE = "default"
