@@ -7,7 +7,6 @@ class ProductsConfig(AppConfig):
 
     def ready(self) -> None:
         from .receivers import (
-            product_create_update_notification,
-            product_delete_notification,
+            product_update_notification,
             increment_product_view_counter
         )

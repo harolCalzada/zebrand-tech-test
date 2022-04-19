@@ -1,7 +1,10 @@
 from http import HTTPStatus
 from decimal import Decimal
+from unittest.mock import patch
 from django.utils.text import slugify
 import pytest
+from apps.products.services import get_product_views_count, set_product_view_count
+from apps.products.models import Product
 
 
 def test_product_list_api(api_client, nightstand_product):
@@ -28,8 +31,12 @@ def test_product_detail_api(api_client, nightstand_product):
     assert response_data['brand_name'] == nightstand_product.brand.name
 
 
-def test_product_view_counter():
-    pass
+def test_product_view_counter(api_client, nightstand_product):
+    set_product_view_count(nightstand_product.slug, 0)
+    response = api_client.get(f'/api/v1/product/{nightstand_product.slug}/')
+    assert response.status_code == HTTPStatus.OK
+    view_count = get_product_views_count(nightstand_product.slug)
+    assert view_count == 1
 
 
 def test_product_create_api(api_client, luuna_brand, admin_user):
@@ -65,11 +72,6 @@ def test_product_create_api_forbidden(api_client, common_user):
     assert response.status_code == HTTPStatus.FORBIDDEN
 
 
-
-def test_create_product_api_notification():
-    pass
-
-
 def test_product_update_api(api_client, admin_user, nooz_brand, nightstand_product):
     api_client.force_authenticate(user=admin_user)
     product = nightstand_product
@@ -103,10 +105,6 @@ def test_product_update_api_forbidden(api_client, nightstand_product, common_use
     assert response.status_code == HTTPStatus.FORBIDDEN
 
 
-def test_product_update_api_notification():
-    pass
-
-
 def test_product_delete_api(api_client, admin_user, nightstand_product):
     api_client.force_authenticate(user=admin_user)
     response = api_client.delete(f'/api/v1/product/{nightstand_product.slug}/')
@@ -122,7 +120,3 @@ def test_product_delete_api_forbidden(api_client, nightstand_product, common_use
     api_client.force_authenticate(user=common_user)
     response = api_client.delete(f'/api/v1/product/{nightstand_product.slug}/')
     assert response.status_code == HTTPStatus.FORBIDDEN
-
-
-def test_product_delete_api_notification():
-    pass
