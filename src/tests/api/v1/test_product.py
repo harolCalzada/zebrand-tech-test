@@ -1,10 +1,8 @@
 from http import HTTPStatus
 from decimal import Decimal
-from unittest.mock import patch
 from django.utils.text import slugify
 import pytest
 from apps.products.services import get_product_views_count, set_product_view_count
-from apps.products.models import Product
 
 
 def test_product_list_api(api_client, nightstand_product):

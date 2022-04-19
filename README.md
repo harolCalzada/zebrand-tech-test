@@ -13,17 +13,18 @@ Your task is to build this system implementing a REST or GraphQL API using the s
 
 ## Requirements
 - docker y docker-compose
-- make (optional)
+- make
 
 ## Assumptions:
-- We can use django admin for create new users and manage permissions.
+- To create the first superuser we can use the django creates superuser command
 
 ## Solution
-- The project use django and django rest framework.
-- The project use the default User model from django,
+- The project uses django and django rest framework.
+- The project uses the default User model from django,
 is a admin user if "is_staff" or "is_superuser" field is True
-- For notifications the project use a broker and worker to send an email in background(dramatiq library).
-- The project uses a in memory database to save the product queried data(redis).
+- For notifications the project uses a broker and worker to send an email in background(dramatiq library).
+- The project uses an in memory database to save the product queried data(redis).
+- The project use django signals for notifications, it send the  trigger for notification email and to increase the count of a product.
 
 ## Build the project for local environment
 Create a .env file inside server-config/local folder with the values inside env_template file
@@ -45,8 +46,6 @@ The project uses the following tools:
 
 
 ## TO DO
-- tests for email notification and product counter
 - create the config for a production environment(new docker configuration)
 - add rate limit to product detail api (to avoid bots that can generate false counter visit value)
-- improve mail message to track product values changed
 - Generate data to load on initial setup(django fixtures)

@@ -9,6 +9,7 @@ from drf_yasg import openapi
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/', include('apps.products.api.v1.urls')),
+    path('api/v1/', include('apps.users.api.v1.urls')),
 ]
 
 if settings.DEBUG:
